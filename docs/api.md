@@ -158,32 +158,32 @@ Runs a workflow across registered agents.
 
 Method:
 - `run(task, state=None) -> RunResult`
-+
-+### LLM classes
-+
-+#### `ChatMessage`
-+Simple role/content message for chat APIs.
-+
-+#### `OllamaResponse`
-+Response wrapper returned by `OllamaClient`.
-+
-+#### `OllamaClient`
-+Calls the Ollama REST API.
-+
-+Method:
-+- `chat(messages, model=None, options=None) -> OllamaResponse`
-+
-+#### `OllamaModelRuntime`
-+Plain-text generation wrapper around `OllamaClient`.
-+
-+Method:
-+- `generate(prompt, options=None, model=None) -> str`
-+
-+#### `OllamaAgentRuntime`
-+Prompt-driven convenience wrapper around `OllamaModelRuntime`.
-+
-+Method:
-+- `run(prompt: str) -> str`
+
+### LLM classes
+
+#### `ChatMessage`
+Simple role/content message for chat APIs.
+
+#### `OllamaResponse`
+Response wrapper returned by `OllamaClient`.
+
+#### `OllamaClient`
+Calls the Ollama REST API.
+
+Method:
+- `chat(messages, model=None, options=None) -> OllamaResponse`
+
+#### `OllamaModelRuntime`
+Plain-text generation wrapper around `OllamaClient`.
+
+Method:
+- `generate(prompt, options=None, model=None) -> str`
+
+#### `OllamaAgentRuntime`
+Prompt-driven convenience wrapper around `OllamaModelRuntime`.
+
+Method:
+- `run(prompt: str) -> str`
 
 ### `RunResult`
 Final result of a controller run.
@@ -193,32 +193,6 @@ Fields:
 - `state`
 - `traces`
 - `validation`
-
-## LLM classes
-
-### `ChatMessage`
-Simple role/content message for chat APIs.
-
-### `OllamaResponse`
-Response wrapper returned by `OllamaClient`.
-
-### `OllamaClient`
-Calls the Ollama REST API.
-
-Method:
-- `chat(messages, model=None, options=None) -> OllamaResponse`
-
-### `OllamaModelRuntime`
-Plain-text generation wrapper around `OllamaClient`.
-
-Method:
-- `generate(prompt, options=None, model=None) -> str`
-
-### `OllamaAgentRuntime`
-Convenience wrapper for prompt-driven Ollama calls.
-
-Method:
-- `run(prompt: str) -> str`
 
 ## Demo helpers
 

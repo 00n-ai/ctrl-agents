@@ -45,9 +45,12 @@ def test_demo_controller_uses_repo_evidence_before_synthesis():
     assert [trace.agent for trace in result.traces] == ["research", "synthesis", "validator"]
     assert opener.requests
     prompt = opener.requests[0]["body"]["messages"][-1]["content"]
-    assert "Repo evidence:" in prompt
-    assert "docs/" in prompt
-    assert "controller" in prompt.lower() or "validator" in prompt.lower()
+    assert "Repo evidence packet:" in prompt
+    assert "## docs/architecture.md" in result.traces[0].output
+    assert "## docs/components.md" in result.traces[0].output
+    lower = result.traces[0].output.lower()
+    assert "controller" in lower
+    assert "state" in lower or "orchestrator" in lower or "workflow" in lower
 
 
 def test_cli_main_prints_answer_and_trace_summary(capsys=None):

@@ -35,13 +35,9 @@ def _repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
-def _search_repo_docs(query: str, *, max_hits: int = 8) -> str:
-    tokens = [token.lower() for token in query.split() if token.strip()]
+def _doc_priority(query: str) -> list[Path]:
     docs_dir = _repo_root() / "docs"
-    hits: list[str] = []
-
-    priority_docs: list[Path] = []
-    query_joined = " ".join(tokens)
+    query_joined = query.lower()
     doc_priority_map = {
         "controller": ["architecture.md", "components.md", "developer-guide.md", "api.md"],
         "workflow": ["architecture.md", "components.md", "testing.md"],
@@ -55,6 +51,7 @@ def _search_repo_docs(query: str, *, max_hits: int = 8) -> str:
         "prompt": ["prompts.md", "developer-guide.md", "api.md"],
     }
 
+    priority_docs: list[Path] = []
     for key, filenames in doc_priority_map.items():
         if key in query_joined:
             for filename in filenames:
@@ -64,10 +61,18 @@ def _search_repo_docs(query: str, *, max_hits: int = 8) -> str:
 
     if not priority_docs:
         priority_docs = sorted(docs_dir.glob("*.md"))
+    return priority_docs
 
-    for path in priority_docs:
+
+def _search_repo_docs(query: str, *, max_hits: int = 12) -> str:
+    tokens = [token.lower() for token in query.split() if token.strip()]
+    sections: list[str] = []
+    used_hits = 0
+
+    for path in _doc_priority(query):
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
-        local_hits = 0
+        doc_hits: list[str] = []
+
         for idx, line in enumerate(lines, start=1):
             lower = line.lower()
             if tokens and not any(token in lower for token in tokens):
@@ -75,21 +80,27 @@ def _search_repo_docs(query: str, *, max_hits: int = 8) -> str:
             snippet = line.strip()
             if not snippet:
                 continue
-            hits.append(f"{path.relative_to(_repo_root())}:{idx}: {snippet}")
-            local_hits += 1
-            if len(hits) >= max_hits:
-                return "\n".join(hits)
-        if local_hits == 0:
-            for idx, line in enumerate(lines[:3], start=1):
+            doc_hits.append(f"- {path.relative_to(_repo_root())}:{idx}: {snippet}")
+            used_hits += 1
+            if used_hits >= max_hits:
+                break
+
+        if not doc_hits:
+            for idx, line in enumerate(lines[:4], start=1):
                 snippet = line.strip()
                 if snippet:
-                    hits.append(f"{path.relative_to(_repo_root())}:{idx}: {snippet}")
-            if len(hits) >= max_hits:
-                return "\n".join(hits[:max_hits])
+                    doc_hits.append(f"- {path.relative_to(_repo_root())}:{idx}: {snippet}")
+            used_hits += len(doc_hits)
 
-    if hits:
-        return "\n".join(hits[:max_hits])
-    return f"No direct repo-doc match for: {query}"
+        if doc_hits:
+            sections.append(f"## {path.relative_to(_repo_root())}\n" + "\n".join(doc_hits))
+
+        if used_hits >= max_hits:
+            break
+
+    if not sections:
+        return f"No direct repo-doc match for: {query}"
+    return "\n\n".join(sections)
 
 
 def build_repo_research_agent() -> AgentRuntime:
@@ -100,7 +111,7 @@ def build_repo_research_agent() -> AgentRuntime:
         prompt=PromptSpec(
             system=(
                 "You are the research agent for ctrl-agents. "
-                "Return only repo evidence, with file:line references. "
+                "Return only repo evidence, grouped by source file with file:line references. "
                 "Do not answer the question directly."
             ),
             user_template="Question: {objective}\nConstraints: {constraints}\nExpected output: {expected_output}",
@@ -109,12 +120,10 @@ def build_repo_research_agent() -> AgentRuntime:
 
     def handler(context, tools: dict[str, ToolRuntime]) -> AgentRunResult:
         search = tools["search"].call({"query": context.task.objective})
-        text = "\n".join(
-            [
-                "evidence:",
-                str(search),
-            ]
-        )
+        text = "\n".join([
+            "evidence packet:",
+            str(search),
+        ])
         return AgentRunResult(text=text, tool_calls=["search"])
 
     return AgentRuntime(
@@ -144,11 +153,11 @@ def build_synthesis_agent(config: DemoConfig, *, opener: Any | None = None) -> A
                 "Expected output: {expected_output}\n"
                 "Checkpoint: {checkpoint}\n"
                 "Confidence: {confidence}\n"
-                "Repo evidence:\n{evidence}\n"
+                "Repo evidence packet:\n{evidence}\n"
                 "Memory: {memory}\n"
-                "Instructions: answer only from the repo evidence above. "
+                "Instructions: answer only from the repo evidence packet above. "
                 "If the evidence is insufficient, say 'answer: insufficient evidence'. "
-                "Keep the answer short and grounded."
+                "Prefer concrete file:line references from the packet and keep the answer short."
             ),
         ),
     )
