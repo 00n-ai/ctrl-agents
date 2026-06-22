@@ -24,7 +24,10 @@ This framework treats the system as a closed-loop controller:
 
 ## Repository layout
 
-- `src/ctrl_agents/` — framework spec and code scaffolding
+- `src/ctrl_agents/spec.py` — framework dataclasses and abstractions
+- `src/ctrl_agents/runtime.py` — controller, agent, validator, and tool runtime
+- `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
+- `src/ctrl_agents/examples.py` — example agent factory
 - `docs/architecture.md` — formal architecture spec
 - `docs/components.md` — component catalog and interactions
 - `docs/testing.md` — positive and negative test cases
@@ -32,11 +35,18 @@ This framework treats the system as a closed-loop controller:
 
 ## Quick start
 
-This repo is currently a framework scaffold. The first implementation step is to wire:
+Run the built-in smoke tests:
+
+```bash
+python3 tests/test_runtime.py
+```
+
+The framework currently demonstrates:
 1. a controller
 2. a workflow graph
-3. a small set of specialized agents
-4. trace logging for every step
+3. specialized agents
+4. trace logging
+5. validation at release
 
 ## Status
 
