@@ -22,9 +22,11 @@ class Task:
 @dataclass
 class ModelSpec:
     name: str
+    provider: str = "ollama"
     temperature: float = 0.2
     max_tokens: int = 2048
     context_window: int = 8192
+    options: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

@@ -55,11 +55,11 @@ Think of the framework as a closed loop:
 
 ### Add a local model
 
-1. create an `OllamaClient`
-2. wrap it in `OllamaModelRuntime`
-3. attach it to an `AgentRuntime`
+1. create or register a provider backend
+2. call `build_model_runtime(...)`
+3. attach the resulting runtime to an `AgentRuntime`
 4. keep the prompt plain-text and parseable
-5. add a smoke test with a fake opener before relying on a live server
+5. add a smoke test with a fake opener or fake backend before relying on a live server
 6. if you need a full demo path, build it through `src/ctrl_agents/demo.py`
 7. expose it via `src/ctrl_agents/cli.py`
 

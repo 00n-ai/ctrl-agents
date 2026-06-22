@@ -27,6 +27,7 @@ This framework treats the system as a closed-loop controller:
 - `src/ctrl_agents/spec.py` — framework dataclasses and abstractions
 - `src/ctrl_agents/runtime.py` — controller, agent, validator, and tool runtime
 - `src/ctrl_agents/llm.py` — Ollama client and model runtimes
+- `src/ctrl_agents/modeling.py` — provider-aware model selection
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
 - `src/ctrl_agents/demo.py` — Ollama-backed demo controller
@@ -70,13 +71,14 @@ The framework currently demonstrates:
 4. trace logging
 5. validation at release
 6. Ollama local model calls
-7. a runnable CLI demo\n
+7. a runnable CLI demo
+
 ## LLM support
 
-The first supported model backend is Ollama.
-Use it when you want a local prompt-driven agent instead of a pure handler-based one.
+The model layer is provider-aware.
+Ollama is the first supported backend, but the controller and agent code only depend on the generic model runtime.
 
-See `docs/llms.md` and `docs/api.md` for the integration contract.
+See `docs/llms.md`, `docs/modeling.md`, and `docs/api.md` for the integration contract.
 
 ## Status
 

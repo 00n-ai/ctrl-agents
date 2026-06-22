@@ -49,9 +49,11 @@ Stores model configuration.
 
 Fields:
 - `name`
+- `provider`
 - `temperature`
 - `max_tokens`
 - `context_window`
+- `options`
 
 ### `PromptSpec`
 Stores system and user prompt templates.
@@ -103,6 +105,26 @@ Guardrail rules for the run.
 
 ### `EvaluatorSpec`
 Rubric for comparing runs.
+
+## Model selection classes
+
+### `ModelBackend`
+Protocol for any backend that can generate text.
+
+### `OllamaBackend`
+Provider backend for Ollama.
+
+### `ModelRuntime`
+Generic wrapper that normalizes model generation across providers.
+
+### `ModelRegistry`
+Maps provider names to backend factories.
+
+### `DEFAULT_MODEL_REGISTRY`
+Built-in registry with Ollama registered.
+
+### `build_model_runtime(spec, system_prompt="", runtime_options=None, registry=None)`
+Create a generic runtime based on `ModelSpec.provider`.
 
 ## Runtime classes
 

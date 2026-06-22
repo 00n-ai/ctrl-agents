@@ -12,7 +12,7 @@ The runtime layer provides simple, explicit execution primitives:
 from dataclasses import dataclass, field
 from typing import Any, Callable, Protocol
 
-from .llm import OllamaModelRuntime
+from .modeling import ModelRuntime
 from .spec import AgentSpec, ContextPack, PolicySpec, State, Task, TraceEntry, WorkflowSpec
 
 
@@ -43,7 +43,7 @@ class AgentRunResult:
 class AgentRuntime:
     spec: AgentSpec
     handler: Callable[[ContextPack, dict[str, ToolRuntime]], AgentRunResult | str] | None = None
-    model_runtime: OllamaModelRuntime | None = None
+    model_runtime: ModelRuntime | None = None
     tools: dict[str, ToolRuntime] = field(default_factory=dict)
 
     def render_prompt(self, context: ContextPack) -> str:

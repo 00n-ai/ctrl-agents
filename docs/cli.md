@@ -24,8 +24,9 @@ ctrl-agents "Explain feedback control"
 ```
 
 Options:
-- `--model` — Ollama model name
-- `--base-url` — Ollama server URL
+- `--provider` — model provider name (default: Ollama)
+- `--model` — model name
+- `--base-url` — provider server URL when applicable
 - `--system-prompt` — system instruction for synthesis
 - `--trace-json` — print trace entries as JSON
 

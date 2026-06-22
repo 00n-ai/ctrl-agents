@@ -28,7 +28,7 @@ def fake_opener(req, timeout=None):
     return FakeResponse({"message": {"content": "answer: demo synthesis"}})
 
 
-def test_demo_controller_uses_ollama_for_synthesis():
+def test_demo_controller_uses_configured_provider_for_synthesis():
     controller = build_demo_controller(DemoConfig(), opener=fake_opener)
     result = controller.run(build_demo_task("What is control theory?"))
 
@@ -51,6 +51,6 @@ def test_cli_main_prints_answer_and_trace_summary(capsys=None):
 
 
 if __name__ == "__main__":
-    test_demo_controller_uses_ollama_for_synthesis()
+    test_demo_controller_uses_configured_provider_for_synthesis()
     test_cli_main_prints_answer_and_trace_summary()
     print("all demo cli tests passed")

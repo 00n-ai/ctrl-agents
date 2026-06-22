@@ -25,13 +25,14 @@ def _default_opener(req, timeout=None):
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="ctrl-agents", description="Run ctrl-agents demos")
     parser.add_argument("prompt", help="Prompt to answer")
-    parser.add_argument("--model", default="llama3.1", help="Ollama model name")
-    parser.add_argument("--base-url", default="http://localhost:11434", help="Ollama base URL")
+    parser.add_argument("--provider", default="ollama", help="Model provider name")
+    parser.add_argument("--model", default="llama3.1", help="Model name")
+    parser.add_argument("--base-url", default="http://localhost:11434", help="Provider base URL when applicable")
     parser.add_argument("--system-prompt", default="You are a concise assistant that answers with evidence and plain text.")
     parser.add_argument("--trace-json", action="store_true", help="Print trace entries as JSON")
     args = parser.parse_args(argv)
 
-    config = DemoConfig(model=args.model, base_url=args.base_url, system_prompt=args.system_prompt)
+    config = DemoConfig(provider=args.provider, model=args.model, base_url=args.base_url, system_prompt=args.system_prompt)
     controller = build_demo_controller(config, opener=_default_opener)
     task = build_demo_task(args.prompt)
     result = controller.run(task)
