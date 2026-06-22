@@ -69,6 +69,19 @@ def _search_repo_docs(query: str, *, max_hits: int = 12) -> str:
     sections: list[str] = []
     used_hits = 0
 
+    source_notes = {
+        "architecture.md": "Why this source matters: defines the system contract and the control-theory mapping.",
+        "components.md": "Why this source matters: defines the reusable framework components and how they interact.",
+        "developer-guide.md": "Why this source matters: explains how developers extend and use the framework.",
+        "testing.md": "Why this source matters: captures the positive and negative test cases that validate behavior.",
+        "trace-format.md": "Why this source matters: defines the trace record that makes the system inspectable.",
+        "api.md": "Why this source matters: documents the public API and runtime classes.",
+        "llms.md": "Why this source matters: explains provider-aware model integration.",
+        "modeling.md": "Why this source matters: defines backend selection and the generic model runtime.",
+        "cli.md": "Why this source matters: shows the end-to-end runnable demo path.",
+        "prompts.md": "Why this source matters: defines prompt structure and message formatting.",
+    }
+
     for path in _doc_priority(query):
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
         doc_hits: list[str] = []
@@ -93,7 +106,9 @@ def _search_repo_docs(query: str, *, max_hits: int = 12) -> str:
             used_hits += len(doc_hits)
 
         if doc_hits:
-            sections.append(f"## {path.relative_to(_repo_root())}\n" + "\n".join(doc_hits))
+            rel = path.relative_to(_repo_root())
+            note = source_notes.get(path.name, f"Why this source matters: relevant repo documentation for {rel}.")
+            sections.append(f"## {rel}\n{note}\n" + "\n".join(doc_hits))
 
         if used_hits >= max_hits:
             break
@@ -156,6 +171,7 @@ def build_synthesis_agent(config: DemoConfig, *, opener: Any | None = None) -> A
                 "Repo evidence packet:\n{evidence}\n"
                 "Memory: {memory}\n"
                 "Instructions: answer only from the repo evidence packet above. "
+                "Start your response with 'answer:'. "
                 "If the evidence is insufficient, say 'answer: insufficient evidence'. "
                 "Prefer concrete file:line references from the packet and keep the answer short."
             ),

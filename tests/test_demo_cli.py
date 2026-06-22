@@ -48,6 +48,7 @@ def test_demo_controller_uses_repo_evidence_before_synthesis():
     assert "Repo evidence packet:" in prompt
     assert "## docs/architecture.md" in result.traces[0].output
     assert "## docs/components.md" in result.traces[0].output
+    assert "Why this source matters:" in result.traces[0].output
     lower = result.traces[0].output.lower()
     assert "controller" in lower
     assert "state" in lower or "orchestrator" in lower or "workflow" in lower
