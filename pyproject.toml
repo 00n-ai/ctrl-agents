@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctrl-agents"
+version = "0.1.0"
+description = "Framework scaffold for evidence-grounded multi-agent systems"
+readme = "README.md"
+requires-python = ">=3.11"
