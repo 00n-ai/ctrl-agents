@@ -28,10 +28,12 @@ Think of the framework as a closed loop:
 ## Project structure
 
 - `src/ctrl_agents/spec.py` — dataclasses describing the system
-- `src/ctrl_agents/runtime.py` — minimal runtime implementation
+- `src/ctrl_agents/runtime.py` — controller, agent, validator, and tool runtime
+- `src/ctrl_agents/llm.py` — Ollama client and model runtimes
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
 - `tests/test_runtime.py` — smoke tests and usage examples
+- `tests/test_ollama.py` — Ollama integration smoke test
 - `docs/` — conceptual and implementation documentation
 
 ## How to extend the framework
@@ -39,11 +41,22 @@ Think of the framework as a closed loop:
 ### Add a new agent
 
 1. define an `AgentSpec`
-2. create a handler function
-3. add any tools the agent needs
-4. register the agent in the controller
-5. add a workflow step that invokes it
-6. add a test that proves the agent stays within role
+2. choose execution mode:
+   - handler-based for deterministic logic
+   - Ollama-backed for prompt-driven reasoning
+3. create a handler function or model runtime
+4. add any tools the agent needs
+5. register the agent in the controller
+6. add a workflow step that invokes it
+7. add a test that proves the agent stays within role
+
+### Add a local model
+
+1. create an `OllamaClient`
+2. wrap it in `OllamaModelRuntime`
+3. attach it to an `AgentRuntime`
+4. keep the prompt plain-text and parseable
+5. add a smoke test with a fake opener before relying on a live server
 
 ### Add a new tool
 

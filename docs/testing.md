@@ -32,3 +32,4 @@
 4. policy violation blocked by validator
 5. rollback from failed convergence
 6. comparison against single-agent baseline
+7. Ollama-backed agent run with a fake opener or fake model runtime

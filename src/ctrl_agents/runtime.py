@@ -12,6 +12,7 @@ The runtime layer provides simple, explicit execution primitives:
 from dataclasses import dataclass, field
 from typing import Any, Callable, Protocol
 
+from .llm import OllamaModelRuntime
 from .spec import AgentSpec, ContextPack, PolicySpec, State, Task, TraceEntry, WorkflowSpec
 
 
@@ -41,14 +42,42 @@ class AgentRunResult:
 @dataclass
 class AgentRuntime:
     spec: AgentSpec
-    handler: Callable[[ContextPack, dict[str, ToolRuntime]], AgentRunResult | str]
+    handler: Callable[[ContextPack, dict[str, ToolRuntime]], AgentRunResult | str] | None = None
+    model_runtime: OllamaModelRuntime | None = None
     tools: dict[str, ToolRuntime] = field(default_factory=dict)
 
+    def render_prompt(self, context: ContextPack) -> str:
+        template = self.spec.prompt.user_template.strip()
+        if not template:
+            return (
+                f"Objective: {context.task.objective}\n"
+                f"Constraints: {', '.join(context.task.constraints) if context.task.constraints else 'none'}\n"
+                f"Expected output: {context.task.expected_output or 'plain text'}\n"
+                f"Checkpoint: {context.state.checkpoint or 'start'}\n"
+                f"Confidence: {context.state.confidence}\n"
+                f"Evidence: {' | '.join(context.evidence) if context.evidence else 'none'}\n"
+                f"Memory: {' | '.join(context.memory) if context.memory else 'none'}"
+            )
+        return template.format(
+            objective=context.task.objective,
+            constraints=", ".join(context.task.constraints),
+            expected_output=context.task.expected_output,
+            checkpoint=context.state.checkpoint,
+            confidence=context.state.confidence,
+            evidence=" | ".join(context.evidence),
+            memory=" | ".join(context.memory),
+        )
+
     def run(self, context: ContextPack) -> AgentRunResult:
-        result = self.handler(context, self.tools)
-        if isinstance(result, str):
-            return AgentRunResult(text=result)
-        return result
+        if self.handler is not None:
+            result = self.handler(context, self.tools)
+            if isinstance(result, str):
+                return AgentRunResult(text=result)
+            return result
+        if self.model_runtime is None:
+            raise ValueError(f"agent {self.spec.name!r} has no handler or model runtime")
+        prompt = self.render_prompt(context)
+        return AgentRunResult(text=self.model_runtime.generate(prompt))
 
 
 @dataclass

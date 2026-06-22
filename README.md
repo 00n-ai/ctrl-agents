@@ -61,6 +61,13 @@ The framework currently demonstrates:
 5. validation at release
 6. Ollama local model calls
 
+## LLM support
+
+The first supported model backend is Ollama.
+Use it when you want a local prompt-driven agent instead of a pure handler-based one.
+
+See `docs/llms.md` and `docs/api.md` for the integration contract.
+
 ## Status
 
 This repository is the design + implementation scaffold for the multi-agent research experiment.

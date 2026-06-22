@@ -107,9 +107,16 @@ Method:
 - `call(payload: dict[str, Any]) -> Any`
 
 ### `AgentRuntime`
-Executes a role handler with a context pack and tool map.
+Executes either a custom role handler or an Ollama-backed prompt run with a context pack and tool map.
 
-Method:
+Fields:
+- `spec`
+- `handler` (optional)
+- `model_runtime` (optional)
+- `tools`
+
+Methods:
+- `render_prompt(context: ContextPack) -> str`
 - `run(context: ContextPack) -> AgentRunResult`
 
 ### `ValidatorRuntime`
@@ -158,6 +165,32 @@ Fields:
 - `state`
 - `traces`
 - `validation`
+
+## LLM classes
+
+### `ChatMessage`
+Simple role/content message for chat APIs.
+
+### `OllamaResponse`
+Response wrapper returned by `OllamaClient`.
+
+### `OllamaClient`
+Calls the Ollama REST API.
+
+Method:
+- `chat(messages, model=None, options=None) -> OllamaResponse`
+
+### `OllamaModelRuntime`
+Plain-text generation wrapper around `OllamaClient`.
+
+Method:
+- `generate(prompt, options=None, model=None) -> str`
+
+### `OllamaAgentRuntime`
+Convenience wrapper for prompt-driven Ollama calls.
+
+Method:
+- `run(prompt: str) -> str`
 
 ## Parsing helpers
 
