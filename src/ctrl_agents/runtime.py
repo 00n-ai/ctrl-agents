@@ -141,7 +141,7 @@ class ControllerRuntime:
         steps = list(self.workflow.steps)
         for index, step in enumerate(steps):
             agent = self.agents[step.agent]
-            context = ContextPack(task=task, state=current_state)
+            context = ContextPack(task=task, state=current_state, evidence=list(current_state.evidence), memory=list(current_state.objections))
             result = agent.run(context)
             final_text = result.text
             traces.append(

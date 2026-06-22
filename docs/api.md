@@ -223,13 +223,16 @@ Method:
 ## Demo helpers
 
 ### `DemoConfig`
-Configuration for the Ollama-backed demo controller.
+Configuration for the demo controller and model backend.
 
-### `build_ollama_synthesis_agent(config, opener=None)`
-Build a synthesis agent using `OllamaModelRuntime`.
+### `build_repo_research_agent()`
+Build the repo-doc evidence gathering agent.
+
+### `build_synthesis_agent(config, opener=None)`
+Build the synthesis agent using the configured model provider.
 
 ### `build_demo_controller(config, opener=None)`
-Build the end-to-end demo controller.
+Build the end-to-end two-step demo controller.
 
 ### `build_demo_task(prompt)`
 Build a `Task` for the CLI demo.

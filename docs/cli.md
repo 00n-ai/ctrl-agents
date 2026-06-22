@@ -34,8 +34,8 @@ Options:
 
 The CLI is intentionally small:
 1. build a demo task
-2. build a demo controller
-3. run the workflow
+2. gather evidence from the repo docs
+3. synthesize with the selected model provider
 4. print the result
 
 It is a reference implementation, not a full production orchestrator.
