@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+"""Example agents for ctrl-agents.
+
+Use this module as a starting point for creating reusable role handlers.
+"""
+
 from .runtime import AgentRunResult, AgentRuntime, ToolRuntime
 from .spec import AgentSpec, ContextPack, ModelSpec, PromptSpec
 

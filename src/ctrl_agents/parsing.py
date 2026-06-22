@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+"""Parsing helpers for ctrl-agents.
+
+The framework keeps plain text as the default output format.
+This module provides small helpers for extracting structure from text
+when a downstream component needs fields.
+"""
+
 import re
 from typing import Any
 

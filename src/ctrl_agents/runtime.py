@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+"""Runtime layer for ctrl-agents.
+
+The runtime layer provides simple, explicit execution primitives:
+- ToolRuntime wraps callable tools
+- AgentRuntime executes a role handler
+- ValidatorRuntime applies release gates
+- ControllerRuntime runs a workflow across agents
+"""
+
 from dataclasses import dataclass, field
 from typing import Any, Callable, Protocol
 

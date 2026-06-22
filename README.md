@@ -28,10 +28,14 @@ This framework treats the system as a closed-loop controller:
 - `src/ctrl_agents/runtime.py` — controller, agent, validator, and tool runtime
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
+- `docs/developer-guide.md` — how to extend the framework
 - `docs/architecture.md` — formal architecture spec
 - `docs/components.md` — component catalog and interactions
+- `docs/extension-guide.md` — how to add new roles, tools, and workflows
 - `docs/testing.md` — positive and negative test cases
 - `docs/prompts.md` — prompt templates and message formats
+- `docs/trace-format.md` — recommended trace schema
+- `docs/api.md` — API reference for core types and runtime classes
 
 ## Quick start
 
@@ -40,6 +44,12 @@ Run the built-in smoke tests:
 ```bash
 python3 tests/test_runtime.py
 ```
+
+Read these first when extending the framework:
+1. `docs/developer-guide.md`
+2. `docs/architecture.md`
+3. `docs/api.md`
+4. `docs/testing.md`
 
 The framework currently demonstrates:
 1. a controller

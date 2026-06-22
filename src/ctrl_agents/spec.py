@@ -1,5 +1,13 @@
 from __future__ import annotations
 
+"""Framework specification dataclasses.
+
+This module defines the reusable abstract types used by ctrl-agents:
+Task, ModelSpec, PromptSpec, ToolSpec, AgentSpec, ControllerSpec,
+WorkflowStep, WorkflowSpec, State, ContextPack, TraceEntry, PolicySpec,
+and EvaluatorSpec.
+"""
+
 from dataclasses import dataclass, field
 from typing import Any
 
