@@ -8,3 +8,6 @@ version = "0.1.0"
 description = "Framework scaffold for evidence-grounded multi-agent systems"
 readme = "README.md"
 requires-python = ">=3.11"
+
+[project.scripts]
+ctrl-agents = "ctrl_agents.cli:main"

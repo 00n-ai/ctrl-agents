@@ -7,5 +7,6 @@
 - [Testing](testing.md)
 - [Prompts](prompts.md)
 - [LLM integration](llms.md)
+- [CLI](cli.md)
 - [Trace format](trace-format.md)
 - [API reference](api.md)

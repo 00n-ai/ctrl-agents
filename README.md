@@ -29,6 +29,8 @@ This framework treats the system as a closed-loop controller:
 - `src/ctrl_agents/llm.py` — Ollama client and model runtimes
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
+- `src/ctrl_agents/demo.py` — Ollama-backed demo controller
+- `src/ctrl_agents/cli.py` — CLI entrypoint
 - `docs/developer-guide.md` — how to extend the framework
 - `docs/architecture.md` — formal architecture spec
 - `docs/components.md` — component catalog and interactions
@@ -45,6 +47,14 @@ Run the built-in smoke tests:
 
 ```bash
 python3 tests/test_runtime.py
+python3 tests/test_ollama.py
+python3 tests/test_demo_cli.py
+```
+
+Run the CLI from source:
+
+```bash
+PYTHONPATH=src python3 -m ctrl_agents.cli "Explain feedback control"
 ```
 
 Read these first when extending the framework:
@@ -60,7 +70,7 @@ The framework currently demonstrates:
 4. trace logging
 5. validation at release
 6. Ollama local model calls
-
+7. a runnable CLI demo\n
 ## LLM support
 
 The first supported model backend is Ollama.

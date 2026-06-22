@@ -32,8 +32,11 @@ Think of the framework as a closed loop:
 - `src/ctrl_agents/llm.py` — Ollama client and model runtimes
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
+- `src/ctrl_agents/demo.py` — demo controller using Ollama for synthesis
+- `src/ctrl_agents/cli.py` — CLI entrypoint
 - `tests/test_runtime.py` — smoke tests and usage examples
 - `tests/test_ollama.py` — Ollama integration smoke test
+- `tests/test_demo_cli.py` — CLI/demo smoke test
 - `docs/` — conceptual and implementation documentation
 
 ## How to extend the framework
@@ -57,6 +60,8 @@ Think of the framework as a closed loop:
 3. attach it to an `AgentRuntime`
 4. keep the prompt plain-text and parseable
 5. add a smoke test with a fake opener before relying on a live server
+6. if you need a full demo path, build it through `src/ctrl_agents/demo.py`
+7. expose it via `src/ctrl_agents/cli.py`
 
 ### Add a new tool
 

@@ -17,6 +17,12 @@ Helpers for converting plain text into fields and extracting JSON blocks when ne
 ### `ctrl_agents.examples`
 Example agent factories for quick experimentation.
 
+### `ctrl_agents.demo`
+Demo controller builders using Ollama-backed synthesis.
+
+### `ctrl_agents.cli`
+Command-line entrypoint for running the demo controller.
+
 ## Core types
 
 ### `Task`
@@ -191,6 +197,25 @@ Convenience wrapper for prompt-driven Ollama calls.
 
 Method:
 - `run(prompt: str) -> str`
+
+## Demo helpers
+
+### `DemoConfig`
+Configuration for the Ollama-backed demo controller.
+
+### `build_ollama_synthesis_agent(config, opener=None)`
+Build a synthesis agent using `OllamaModelRuntime`.
+
+### `build_demo_controller(config, opener=None)`
+Build the end-to-end demo controller.
+
+### `build_demo_task(prompt)`
+Build a `Task` for the CLI demo.
+
+## CLI
+
+### `main(argv=None)`
+Run the demo from the command line.
 
 ## Parsing helpers
 
