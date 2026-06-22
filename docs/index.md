@@ -6,5 +6,6 @@
 - [Extension guide](extension-guide.md)
 - [Testing](testing.md)
 - [Prompts](prompts.md)
+- [LLM integration](llms.md)
 - [Trace format](trace-format.md)
 - [API reference](api.md)

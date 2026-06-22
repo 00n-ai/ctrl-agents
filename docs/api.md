@@ -8,6 +8,9 @@ Dataclasses that define the framework’s abstract model.
 ### `ctrl_agents.runtime`
 Minimal runtime objects that execute agents, tools, validation, and controller loops.
 
+### `ctrl_agents.llm`
+Local LLM clients and model runtimes, starting with Ollama.
+
 ### `ctrl_agents.parsing`
 Helpers for converting plain text into fields and extracting JSON blocks when needed.
 
@@ -120,6 +123,32 @@ Runs a workflow across registered agents.
 
 Method:
 - `run(task, state=None) -> RunResult`
++
++### LLM classes
++
++#### `ChatMessage`
++Simple role/content message for chat APIs.
++
++#### `OllamaResponse`
++Response wrapper returned by `OllamaClient`.
++
++#### `OllamaClient`
++Calls the Ollama REST API.
++
++Method:
++- `chat(messages, model=None, options=None) -> OllamaResponse`
++
++#### `OllamaModelRuntime`
++Plain-text generation wrapper around `OllamaClient`.
++
++Method:
++- `generate(prompt, options=None, model=None) -> str`
++
++#### `OllamaAgentRuntime`
++Prompt-driven convenience wrapper around `OllamaModelRuntime`.
++
++Method:
++- `run(prompt: str) -> str`
 
 ### `RunResult`
 Final result of a controller run.

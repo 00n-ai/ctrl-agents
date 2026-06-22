@@ -26,6 +26,7 @@ This framework treats the system as a closed-loop controller:
 
 - `src/ctrl_agents/spec.py` — framework dataclasses and abstractions
 - `src/ctrl_agents/runtime.py` — controller, agent, validator, and tool runtime
+- `src/ctrl_agents/llm.py` — Ollama client and model runtimes
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
 - `docs/developer-guide.md` — how to extend the framework
@@ -34,6 +35,7 @@ This framework treats the system as a closed-loop controller:
 - `docs/extension-guide.md` — how to add new roles, tools, and workflows
 - `docs/testing.md` — positive and negative test cases
 - `docs/prompts.md` — prompt templates and message formats
+- `docs/llms.md` — local LLM integration guide
 - `docs/trace-format.md` — recommended trace schema
 - `docs/api.md` — API reference for core types and runtime classes
 
@@ -57,6 +59,7 @@ The framework currently demonstrates:
 3. specialized agents
 4. trace logging
 5. validation at release
+6. Ollama local model calls
 
 ## Status
 
