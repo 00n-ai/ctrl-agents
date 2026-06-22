@@ -30,8 +30,9 @@ This framework treats the system as a closed-loop controller:
 - `src/ctrl_agents/modeling.py` — provider-aware model selection
 - `src/ctrl_agents/parsing.py` — plain-text and JSON extraction helpers
 - `src/ctrl_agents/examples.py` — example agent factory
-- `src/ctrl_agents/demo.py` — Ollama-backed demo controller
+- `src/ctrl_agents/demo.py` — repo-doc research + synthesis demo
 - `src/ctrl_agents/cli.py` — CLI entrypoint
+- `docs/current-state.md` — restart point for the project
 - `docs/developer-guide.md` — how to extend the framework
 - `docs/architecture.md` — formal architecture spec
 - `docs/components.md` — component catalog and interactions
@@ -39,6 +40,8 @@ This framework treats the system as a closed-loop controller:
 - `docs/testing.md` — positive and negative test cases
 - `docs/prompts.md` — prompt templates and message formats
 - `docs/llms.md` — local LLM integration guide
+- `docs/modeling.md` — provider-aware model selection
+- `docs/cli.md` — CLI usage
 - `docs/trace-format.md` — recommended trace schema
 - `docs/api.md` — API reference for core types and runtime classes
 
@@ -49,6 +52,7 @@ Run the built-in smoke tests:
 ```bash
 python3 tests/test_runtime.py
 python3 tests/test_ollama.py
+python3 tests/test_modeling.py
 python3 tests/test_demo_cli.py
 ```
 
@@ -59,10 +63,11 @@ PYTHONPATH=src python3 -m ctrl_agents.cli "Explain feedback control"
 ```
 
 Read these first when extending the framework:
-1. `docs/developer-guide.md`
-2. `docs/architecture.md`
-3. `docs/api.md`
-4. `docs/testing.md`
+1. `docs/current-state.md`
+2. `docs/developer-guide.md`
+3. `docs/architecture.md`
+4. `docs/api.md`
+5. `docs/testing.md`
 
 The framework currently demonstrates:
 1. a controller
@@ -71,8 +76,7 @@ The framework currently demonstrates:
 4. trace logging
 5. validation at release
 6. Ollama local model calls
-7. a runnable CLI demo
-
+7. a runnable CLI demo\n
 ## LLM support
 
 The model layer is provider-aware.

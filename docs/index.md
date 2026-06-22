@@ -1,5 +1,6 @@
 # ctrl-agents docs
 
+- [Current state](current-state.md)
 - [Developer guide](developer-guide.md)
 - [Architecture](architecture.md)
 - [Components](components.md)
